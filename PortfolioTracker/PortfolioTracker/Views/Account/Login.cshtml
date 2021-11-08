@@ -4,37 +4,60 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style type="text/css">
+    .main {
+        padding:0;
+    }
+</style>
+<div class="main">
+    <!-- Sing in  Form -->
+    <section class="sign-in">
+        <div class="container">
+            <div class="signin-content">
+                <div class="signin-image">
+                    <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+                    <a asp-action="Register" class="signup-image-link">Create an account</a>
+                </div>
 
-<h4>Login</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
+                <div class="signin-form">
+                    <h2 class="form-title">Sign in</h2>
+                    <form asp-action="Login" class="register-form" id="login-form">
+                        <div class="form-group">
+                            <label asp-for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" asp-for="username" id="your_name" placeholder="Username" />
+                            <span asp-validation-for="username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="password"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" asp-for="password" id="your_pass" placeholder="Password" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+            <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+            <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                        </div>
+                        <span class="text-danger">
+                            @if (ViewData["error"] != null)
+                            {
+                                @ViewData["error"]
+                            }
+                        </span>
+                    </form>
+                    <div class="social-login">
+                        <span class="social-label">Or login with</span>
+                        <ul class="socials">
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-            <span class="text-danger">
-                @if (ViewData["error"] != null)
-                {
-                    @ViewData["error"]
-                }
-            </span>
-        </form>
-    </div>
-</div>
-<div>
-    <a asp-action="Register">Do not have an account? <u>Register here</u> </a>
+        </div>
+    </section>
 </div>
 
 @section Scripts {

@@ -4,49 +4,65 @@
     ViewData["Title"] = "Register";
 }
 
-<h4>Register</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
+<style type="text/css">
+    .main {
+        padding: 0;
+    }
+</style>
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form asp-action="Register" class="register-form" id="register-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" asp-for="username" id="name" placeholder="Your Name" />
+                            <span asp-validation-for="username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" asp-for="email" id="email" placeholder="Your Email" />
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="password"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" asp-for="password" id="pass" placeholder="Password" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="confirmpassword"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input type="password" asp-for="confirmpassword" id="re_pass" placeholder="Repeat your password" />
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                        </div>
+                        <span class="text-danger">
+                            @if (ViewData["error"] != null)
+                            {
+                                @ViewData["error"]
+                            }
+                        </span>
+                    </form>
             </div>
-            <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <div class="signup-image">
+                    <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
+                    <a asp-action="Login" class="signup-image-link">I am already member</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="confirmpassword" class="control-label"></label>
-                <input asp-for="confirmpassword" class="form-control" />
-                <span asp-validation-for="confirmpassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-primary" />
-            </div>
-            <span class="text-danger">
-                @if (ViewData["error"] != null)
-                {
-                    @ViewData["error"]
-                }
-            </span>
-        </form>
-    </div>
+        </div>
+    </section>
 </div>
 
-<div>
-    <a asp-action="Login">Already have an account? <u>Login here</u> </a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                    @section Scripts {
+                        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                    }

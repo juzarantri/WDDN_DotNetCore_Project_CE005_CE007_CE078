@@ -3,80 +3,132 @@
 @{
     ViewData["Title"] = "Home";
 }
-<h4>Add Coin</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="StoreCoin">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="coin" class="control-label"></label>
-            <select id="coins" asp-for="coin" class="form-control">
-                @if (ViewBag.coin != null)
+<style type="text/css">
+    body {
+        background-image:src('../../wwwroot/images/home_page_bg.jpg');
+    }
+</style>
+
+<div class="container" >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <h2 class="form-title">Add Coin</h2>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <form asp-action="StoreCoin">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label asp-for="coin" class="control-label"></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select id="coins" asp-for="coin" class="form-control">
+                                @if (ViewBag.coin != null)
+                                {
+                                    <option value="BTCUSDT">@ViewBag.coin</option>
+                                }
+                                else
+                                {
+                                    <option value="BTCUSDT">Select</option>
+                                }
+                                <option value="BTCUSDT">BTCUSDT</option>
+                                <option value="BNBUSDT">BNBUSDT</option>
+                                <option value="ETHUSDT">ETHUSDT</option>
+                                <option value="SOLUSDT">SOLUSDT</option>
+                                <option value="VETUSDT">VETUSDT</option>
+                                <option value="DOGEUSDT">DOGEUSDT</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <span asp-validation-for="coin" class="text-danger"></span>
+                    </div>
+                    </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label asp-for="qyantity" class="control-label"></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input asp-for="qyantity" class="form-control" />
+                        </div>
+                        <div class="col-md-1"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-10">
+                                <span asp-validation-for="qyantity" class="text-danger"></span>
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label asp-for="buyingprice" class="control-label"></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input asp-for="buyingprice" class="form-control" />
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                            <span asp-validation-for="buyingprice" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label class="control-label">Current Price</label>
+                        </div>
+                        <div class="col-md-8">
+                            @if (ViewBag.price != null)
+                                @ViewBag.price
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                    </div>
+</form>
+            <table class="table">
+
+                @if (ViewBag.list != null)
                 {
-                    <option value="BTCUSDT">@ViewBag.coin</option>
+                    <tr>
+                        <th>Coin Name</th>
+                        <th>Quantity</th>
+                        <th>Buying Price</th>
+                        <th>Total Invested</th>
+                        <th>Profit/Loss</th>
+
+                    </tr>
+                    @foreach (var item in ViewBag.list)
+                    {
+
+                        <tr>
+                            <td>@item.coin</td>
+                            <td>@item.qyantity</td>
+                            <td>@item.buyingprice</td>
+                            <td>@item.totalinvested</td>
+                            <td>@System.Math.Round(((ViewData[item.coin] - item.buyingprice) * 100) / item.buyingprice, 2)%</td>
+                            <td><a asp-controller="Coin" asp-action="deleteCoin" asp-route-id=@item.id>Delete</a></td>
+                        </tr>
+                    }
                 }
-                else
-                {
-                    <option value="BTCUSDT">Select</option>
-                }
-                <option value="BTCUSDT">BTCUSDT</option>
-                <option value="BNBUSDT">BNBUSDT</option>
-                <option value="ETHUSDT">ETHUSDT</option>
-                <option value="SOLUSDT">SOLUSDT</option>
-                <option value="VETUSDT">VETUSDT</option>
-                <option value="DOGEUSDT">DOGEUSDT</option>
-            </select>
-                <span asp-validation-for="coin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="qyantity" class="control-label"></label>
-                <input asp-for="qyantity" class="form-control" />
-                <span asp-validation-for="qyantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="buyingprice" class="control-label"></label>
-                <input asp-for="buyingprice" class="form-control" />
-                <span asp-validation-for="buyingprice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Current Price</label>
-                @if(ViewBag.price != null)
-                    @ViewBag.price
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
-            </div>
-        </form>
+            </table>
+        </div>
     </div>
 </div>
 
-<table>
 
-    @if (ViewBag.list != null)
-    {
-        <tr>
-            <th>Coin Name</th>
-            <th>Quantity</th>
-            <th>Buying Price</th>
-            <th>Total Invested</th>
-            <th>Profit/Loss</th>
-
-        </tr>
-        @foreach (var item in ViewBag.list)
-        {
-
-<tr>
-    <td>@item.coin</td>
-    <td>@item.qyantity</td>
-    <td>@item.buyingprice</td>
-    <td>@item.totalinvested</td>
-    <td>@System.Math.Round(((ViewData[item.coin] - item.buyingprice)*100)/item.buyingprice,2)%</td>
-    <td><a asp-controller="Coin" asp-action="deleteCoin" asp-route-id=@item.id>Delete</a></td>
-</tr>
-        }
-    }
-</table>
 
 
 @section Scripts {
